@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Image, TouchableOpacity, TextInput} from 'react-native';
 import ImgBox from './ImgBox';
 
-class InputBox extends Component {
+class InputBox extends React.Component {
   state = {
     user: ''
   }

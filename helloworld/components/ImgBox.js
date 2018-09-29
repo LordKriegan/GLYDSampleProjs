@@ -1,26 +1,42 @@
-import React, { Component } from 'react';
-import {Platform, View, Image, TouchableOpacity, Text } from 'react-native';
+import React from 'react';
+import { Platform, Share, View, Image, TouchableOpacity, Text } from 'react-native';
+import { Constants, Location, Permissions } from 'expo';
 
-class ImgBox extends Component {
+const imgUrl = 'https://lh3.googleusercontent.com/--8F8OajU2S8/Wg7SBWjExII/AAAAAAAAFnM/BKdkLVYELzwm0jhHdEMHGLbjmjc8MNcKACJoC/w530-h691-n/images%252520%252816%2529.jpg';
+class ImgBox extends React.Component {
+
   state = {
     location: '',
+    errorMsg: ''
   };
-  componentDidMount() {
-    geolocation.getCurrentPosition(pos => {
+  componentWillMount() {
+    if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
-        location: {
-          lat: JSON.stringify(pos.coords.latitude),
-          long: JSON.stringify(pos.coords.longitude),
-        },
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
       });
-    });
+    } else {
+      this._getLocationAsync();
+    }
   }
+
+  _getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+        errorMessage: 'Permission to access location was denied',
+      });
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    this.setState({ location });
+  };
+
   shareImg = () => {
     let shareOpts = {};
     if (Platform.OS === "ios") {
-      shareOpts.url = 'https://lh3.googleusercontent.com/--8F8OajU2S8/Wg7SBWjExII/AAAAAAAAFnM/BKdkLVYELzwm0jhHdEMHGLbjmjc8MNcKACJoC/w530-h691-n/images%252520%252816%2529.jpg'
+      shareOpts.url = imgUrl;
     } else {
-      shareOpts.message = 'https://lh3.googleusercontent.com/--8F8OajU2S8/Wg7SBWjExII/AAAAAAAAFnM/BKdkLVYELzwm0jhHdEMHGLbjmjc8MNcKACJoC/w530-h691-n/images%252520%252816%2529.jpg'
+      shareOpts.message = imgUrl;
     }
     Share.share(shareOpts).then((resp) => {
       console.log(resp);
@@ -38,19 +54,21 @@ class ImgBox extends Component {
               width: 300,
             }}
             source={{
-              uri:              'https://lh3.googleusercontent.com/--8F8OajU2S8/Wg7SBWjExII/AAAAAAAAFnM/BKdkLVYELzwm0jhHdEMHGLbjmjc8MNcKACJoC/w530-h691-n/images%252520%252816%2529.jpg',
+              uri: imgUrl,
             }}
           />
         </TouchableOpacity>
         <Text>Your name is {this.props.user}</Text>
-        {this.state.location ? (
-          <Text>
-            I FOUNDZEDDD YOUUU! You are at {this.state.location.latitude},{' '}
-            {this.state.location.longitude}!!
-          </Text>
-        ) : (
-          <Text>I iz lookin for you.....</Text>
-        )}
+        {this.state.location 
+          ? <Text>
+            I FOUNDZEDDD YOUUU! You are at {JSON.stringify(this.state.location.coords.latitude)}, {JSON.stringify(this.state.location.coords.longitude)}!!
+            </Text>
+         :  <Text>I iz lookin for you.....</Text>
+          }
+        {this.state.errorMsg 
+         ? <Text> But I can't findzded you... :(</Text>
+         : <View></View>
+         }
       </View>
     );
   }

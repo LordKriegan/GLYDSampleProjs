@@ -1,7 +1,5 @@
 import React from 'react';
 import {
-  Platform,
-  StyleSheet,
   Text,
   View,
   TouchableHighlight,
@@ -43,7 +41,7 @@ export default class App extends React.Component {
         {
         this.state.user ?
         <ImgBox user={this.state.user} /> : 
-        ""
+        <View></View>
         }
       </View>
     );
