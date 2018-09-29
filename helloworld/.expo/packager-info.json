@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
-  "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 11792,
-  "expoServerNgrokUrl": "https://wv-cy9.lordkriegan.helloworld.exp.direct",
-  "packagerNgrokUrl": "https://packager.wv-cy9.lordkriegan.helloworld.exp.direct",
-  "ngrokPid": 11628
+  "devToolsPort": 19003,
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
