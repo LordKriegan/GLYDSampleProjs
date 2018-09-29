@@ -1,0 +1,15 @@
+{
+  "name": "foobar",
+  "version": "1.0.0",
+  "description": "GLYD sample project foobar",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Qamar A. Stationwala",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
