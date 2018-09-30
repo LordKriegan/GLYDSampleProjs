@@ -7,7 +7,7 @@ class ImgBox extends React.Component {
 
   state = {
     location: '',
-    errorMsg: ''
+    errorMessage: ''
   };
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -65,9 +65,9 @@ class ImgBox extends React.Component {
             </Text>
          :  <Text>I iz lookin for you.....</Text>
           }
-        {this.state.errorMsg 
+        {this.state.errorMessage
          ? <Text> But I can't findzded you... :(</Text>
-         : <View></View>
+         : <Text> I'll getchoo sooooonz~~!!!~!</Text>
          }
       </View>
     );
